@@ -1,31 +1,64 @@
 'use strict'
 
 import React, { Component } from 'react'
-import Title from './title'
 
 class App extends Component {
+  constructor () {
+    super()
+    this.state = {
+      value: 'Valor inicial',
+      checked: false
+    }
+  }
+
   render () {
     return (
-      <div id='1'>
-        <Title name='Diego' lastname='Bezerra' />
-      </div>
+      <form>
+        <input
+          type='text' value={this.state.value} onChange={(e) => {
+            this.setState({ value: e.target.value })
+          }}
+        />
+        <label>
+          <input
+            type='checkbox'
+            value='my-checkbox'
+            checked={this.state.checked}
+            onChange={(e) => this.setState({ checked: e.target.checked })}
+          />
+          Checkbox
+        </label>
+      </form>
     )
   }
 }
 
-/* const App = React.createClass(
-  {
-    render: function () {
-      return (
-        <div id='1'>
-          <Title name='Diego' />
-        </div>
-      )
-    }
-  }
-) */
-
 export default App
+/* return (
+    <div className='Container'>
+      <Square color={this.state.color} />
+      {['red', 'blue', 'green'].map((color) => (
+        <Button
+          key={color}
+          handleClick={() => this.setState({ color })}
+        >{color}
+        </Button>
+      ))}
+    </div>
+  )
+*/
+
+/* const App = React.createClass(
+    {
+      render: function () {
+        return (
+          <div id='1'>
+            <Title name='Diego' />
+          </div>
+        )
+      }
+    }
+  ) */
 
 /*
   Atributos HTML via props
