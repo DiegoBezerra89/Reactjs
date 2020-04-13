@@ -29,9 +29,31 @@ class App extends Component {
               repos: result.public_repos,
               followers: result.followers,
               following: result.following
-            }
+            },
+            repos: [],
+            starred: []
           })
-          console.log(result)
+        })
+    }
+  }
+
+  getGitHubApiUrl(username, type) {
+    const internalType = type ? `/${type}` : ''
+    const internalUsername = username ? `/${username}` : ''
+    return `https://api.github.com/users${internalUsername}${internalType}`
+  }
+
+  getRepos(type) {
+    return (e) => {
+      const username = this.state.userinfo.login
+      ajax().get(this.getGitHubApiUrl(username, type))
+        .then((result) => {
+          this.setState({
+            [type]: result.map((repo) => ({
+              name: repo.name,
+              link: repo.html_url
+            }))
+          })
         })
     }
   }
@@ -43,8 +65,8 @@ class App extends Component {
         repos={this.state.repos}
         starred={this.state.starred}
         handleSearch={(e) => this.handleSearch(e)}
-        getRepos={() => console.log('Get Repos')}
-        getStarred={() => console.log('Get Starred')}
+        getRepos={this.getRepos('repos')}
+        getStarred={this.getRepos('starred')}
       />
     )
   }
